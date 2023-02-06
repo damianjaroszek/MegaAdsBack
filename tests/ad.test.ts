@@ -57,3 +57,44 @@ test('AdRecord.findAll returns smaller amount of data.', async () => {
     expect((ads[0] as AdEntity).description).toBeUndefined();
 
 });
+
+// --------- TESTY DODAWANIA OGŁOSZEŃ ----------------
+
+test('AdRecord.inserts returns new UUID.', async () => {
+
+    const ad = new AdRecord({
+        name: 'Test Name',
+        description: 'Test Description',
+        url: 'https://megak.pl',
+        price: 0,
+        lat: 9,
+        lon: 9,
+    });
+
+    await ad.insert();
+
+    expect(ad.id).toBeDefined();
+    expect(typeof ad.id).toBe('string');
+
+});
+
+test('AdRecord.insert inserts data to database.', async () => {
+
+    const ad = new AdRecord({
+        id: 'abc',
+        name: 'Test Name',
+        description: 'Test Description',
+        url: 'https://megak.pl',
+        price: 0,
+        lat: 9,
+        lon: 9,
+    });
+
+    const foundAd = await AdRecord.getOne(ad.id);
+
+    expect(foundAd).toBeDefined();
+    expect(foundAd).not.toBeNull();
+    expect(foundAd.id).toBe(ad.id);
+
+
+});
