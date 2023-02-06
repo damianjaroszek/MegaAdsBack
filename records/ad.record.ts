@@ -1,4 +1,4 @@
-import {AdEntity, NewAdEntity} from "../types";
+import {AdEntity, NewAdEntity, SimpleAdEntity} from "../types";
 import {ValidationError} from "../utils/errors";
 import {pool} from "../utils/db";
 import {FieldPacket} from "mysql2";
@@ -8,13 +8,13 @@ type AdRecordResult = [AdEntity[], FieldPacket[]];
 export class AdRecord implements AdEntity {
 
     id: string;
-
     name: string;
     description: string;
     price: number;
     url: string;
     lat: number;
     lon: number;
+
     constructor(obj: NewAdEntity) {
         if (!obj.name || obj.name.length > 100) {
             throw new ValidationError('Nazwa ogłoszenia nie może być pusta ani przekraczać 100 znaków.');
@@ -53,5 +53,20 @@ export class AdRecord implements AdEntity {
         }) as AdRecordResult;
 
         return results.length === 0 ? null : new AdRecord(results[0]);
+    }
+
+    // ------------- MODYFIKACJA FUNKCJI FIND ALL - ZWRACANA OKROJONA ILOŚĆ DANYCH ---------------- //
+    static async findAll(name: string): Promise<SimpleAdEntity[]> {
+        const [results] = await pool.execute('SELECT * FROM `ads` WHERE `name` LIKE :search', {
+            search: `%${name}%`, // LIKE w placeholders
+        }) as AdRecordResult;
+        return results.map(result => {
+            const {id, lat, lon} = result;  // okrajamy zwracane wyniki do id, lat, lon
+            return {
+                id,
+                lat,
+                lon,
+            }
+        });
     }
 }
