@@ -3,7 +3,7 @@ import cors from 'cors';
 import 'express-async-errors';
 import {handleError, ValidationError} from "./utils/errors";
 import rateLimit from 'express-rate-limit';
-import {adRouter} from "./routers/ad";
+import {adRouter} from "./routers/ad.router";
 
 const app = express();
 
