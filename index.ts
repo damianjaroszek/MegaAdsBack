@@ -1,7 +1,7 @@
-import express, {json} from 'express';
+import express, {json, Router} from 'express';
 import cors from 'cors';
 import 'express-async-errors';
-import {handleError, ValidationError} from "./utils/errors";
+import {handleError} from "./utils/errors";
 import rateLimit from 'express-rate-limit';
 import {adRouter} from "./routers/ad.router";
 
@@ -18,16 +18,19 @@ app.use(rateLimit({
     max: 100, // Limit each IP to 100 requests per window
 }));
 
+const router = Router(); // gdy musimy dodać prefix np api/ad
+
 // Routers
-app.use('/ad', adRouter);
+router.use('/ad', adRouter);
+app.use('/api', router);
 
 // app.get('/', async(req, res)=>{
 //     throw new Error('Something was wrong');  // sprawdzamy czy obsługa błędów działa
 // });
 
-app.get('/', async (req, res) => {
-    throw new ValidationError('Something was wrong');  // sprawdzamy czy obsługa błędów działa
-});
+// app.get('/', async (req, res) => {
+//     throw new ValidationError('Something was wrong');  // sprawdzamy czy obsługa błędów działa
+// });
 
 app.use(handleError);
 
