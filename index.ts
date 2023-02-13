@@ -18,7 +18,7 @@ app.use(rateLimit({
     max: 100, // Limit each IP to 100 requests per window
 }));
 
-const router = Router(); // gdy musimy dodać prefix np api/ad
+const router = Router(); // gdy musimy dodać prefix np api/ad dodajemy router
 
 // Routers
 router.use('/ad', adRouter);
