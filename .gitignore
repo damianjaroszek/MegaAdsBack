@@ -142,3 +142,6 @@ dist
 .svelte-kit
 
 # End of https://www.toptal.com/developers/gitignore/api/node
+
+# umieszczamy konfigurację w gitignore aby nikt nie mógł podejrzeć naszych nastaw do db
+.config/config.ts
