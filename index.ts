@@ -22,7 +22,7 @@ const router = Router(); // gdy musimy dodać prefix np api/ad dodajemy router
 
 // Routers
 router.use('/ad', adRouter);
-app.use('/api', router);
+app.use('/api2', router);
 
 // app.get('/', async(req, res)=>{
 //     throw new Error('Something was wrong');  // sprawdzamy czy obsługa błędów działa
