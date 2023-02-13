@@ -5,4 +5,4 @@
 //     dbDatabase: 'database',
 // };
 
-// do przechowywania rzeczy, które są zmienne np. jak połączenie z bazą
+// do przechowywania rzeczy, które są zmienne np. jak połączenie z baządsd
